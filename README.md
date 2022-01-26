@@ -1,2 +1,15 @@
-# SocialSquare-Desktop
-The Windows and macOS versions of SocialSquare. The social media platform designed from the ground up to be private, secure, and not farm your data.
+# 🚀 Welcome to your new awesome project!
+
+This project has been created using **webpack-cli**, you can now run
+
+```
+npm run build
+```
+
+or
+
+```
+yarn build
+```
+
+to bundle your application

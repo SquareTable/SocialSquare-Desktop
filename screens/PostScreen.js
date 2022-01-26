@@ -126,7 +126,7 @@ const PostScreen = ({navigation, route}) => {
             setFormatThreeSelected(false)
             setFormatFourSelected(false)
             setFormatFiveSelected(true)
-            setFormatMessage('Create a category')
+            setFormatMessage('Create a category (iOS or Android only)')
         }
     }
 

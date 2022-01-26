@@ -9,6 +9,8 @@ import SocialSquareLogo_B64_png from "./assets/SocialSquareLogo_Base64_png";
 import { ProfilePictureURIContext } from "./components/ProfilePictureURIContext.js";
 import { AllCredentialsStoredContext } from "./components/AllCredentialsStoredContext.js";
 import { ShowAccountSwitcherContext } from "./components/ShowAccountSwitcherContext.js";
+import NetInfo from "@react-native-community/netinfo";
+import { AppStylingContext } from "./components/AppStylingContext.js";
 
 const App = () => {
   const [storedCredentials, setStoredCredentials] = useState(null);
@@ -17,6 +19,7 @@ const App = () => {
   const [isReady, setIsReady] = useState(false);
   const [showAccountSwitcher, setShowAccountSwitcher] = useState(false);
   const AppColorScheme = useColorScheme();
+  const [AppStylingContextState, setAppStylingContextState] = useState('Default');
   const AppDarkTheme = {
     dark: true,
     colors: {
@@ -233,10 +236,28 @@ const App = () => {
         setAllCredentialsStoredList(JSON.parse(result));
       }
     }).catch((error) => {console.error('Error getting all stored credentials list', error)})
+    await AsyncStorage.getItem('AppStylingContextState').then((result) => {
+      if (!result) {
+        setAppStylingContextState('Default');
+        AsyncStorage.setItem('AppStylingContextState', 'Default');
+      } else if (result == 'Default') {
+        setAppStylingContextState('Default');
+      } else if (result == 'Dark') {
+        setAppStylingContextState('Dark');
+      } else if (result == 'Light') {
+        setAppStylingContextState('Light');
+      } else {
+        setAppStylingContextState('Default')
+        AsyncStorage.setItem('AppStylingContextState', 'Default');
+        console.error('AppStylingContextState was not set to Default, Dark, or Light. Setting to Default')
+      }
+    }).catch((error) => {console.error('Error getting AppStylingContextState', error)})
     setIsReady(true);
   }
   useEffect(() => {
-    setUpApp();
+    if (isReady == false) {
+      setUpApp();
+    }
   }, []);
   if (!isReady) {
     return (
@@ -250,9 +271,11 @@ const App = () => {
         <ProfilePictureURIContext.Provider value={{profilePictureUri, setProfilePictureUri}}>
           <AllCredentialsStoredContext.Provider value={{allCredentialsStoredList, setAllCredentialsStoredList}}>
             <ShowAccountSwitcherContext.Provider value={{showAccountSwitcher, setShowAccountSwitcher}}>
-              <NavigationContainer theme={AppColorScheme == 'dark' ? AppDarkTheme : AppLightTheme}>
-                <Start_Stack/>
-              </NavigationContainer>
+              <AppStylingContext.Provider value={{AppStylingContextState, setAppStylingContextState}}>
+                <NavigationContainer theme={AppStylingContextState == 'Default' ? AppColorScheme == 'dark' ? AppDarkTheme : AppLightTheme : AppStylingContextState == 'Dark' ? AppDarkTheme : AppStylingContextState == 'Light' ? AppLightTheme : undefined}>
+                  <Start_Stack/>
+                </NavigationContainer>
+              </AppStylingContext.Provider>
             </ShowAccountSwitcherContext.Provider>
           </AllCredentialsStoredContext.Provider>
         </ProfilePictureURIContext.Provider>
