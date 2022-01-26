@@ -11,21 +11,42 @@
     "windows": "react-native run-windows"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.15.17",
+    "@react-native-community/netinfo": "^7.1.8",
+    "@react-navigation/bottom-tabs": "^6.0.9",
+    "@react-navigation/native": "^6.0.6",
+    "@react-navigation/stack": "^6.0.11",
+    "axios": "^0.25.0",
+    "babel-loader": "^8.2.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "formik": "^2.2.9",
     "react": "17.0.2",
+    "react-dom": "^17.0.2",
     "react-native": "0.67.1",
+    "react-native-gesture-handler": "^2.2.0",
     "react-native-macos": "^0.64.25",
-    "react-native-windows": "0.67.0"
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-screens": "^3.10.2",
+    "react-native-vector-icons": "^9.0.0",
+    "react-native-web": "^0.17.5",
+    "react-native-windows": "0.67.0",
+    "styled-components": "^5.3.3",
+    "webpack": "^5.67.0"
   },
   "devDependencies": {
     "@babel/core": "7.16.12",
     "@babel/runtime": "7.16.7",
     "@react-native-community/eslint-config": "2.0.0",
+    "@webpack-cli/generators": "^2.4.2",
     "babel-jest": "26.6.3",
     "eslint": "7.14.0",
     "jest": "26.6.3",
+    "metro-config": "^0.66.2",
     "metro-react-native-babel-preset": "0.66.2",
     "react-test-renderer": "17.0.2",
-    "metro-config": "^0.66.2"
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.3"
   },
   "jest": {
     "preset": "react-native"
