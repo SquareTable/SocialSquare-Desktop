@@ -33,6 +33,7 @@ import { ImageBackground, ScrollView, Text, TouchableOpacity, View, Image, Linki
 import SocialSquareLogo_B64_png from '../assets/SocialSquareLogo_Base64_png.js';
 import { ProfilePictureURIContext } from '../components/ProfilePictureURIContext.js';
 import { AllCredentialsStoredContext } from '../components/AllCredentialsStoredContext.js';
+import { HasOpenedSocialSquareContext } from '../components/HasOpenedSocialSquareContext.js';
 
 
 const SettingsPage = ({navigation}) => {
@@ -43,6 +44,7 @@ const SettingsPage = ({navigation}) => {
     const [webBrowserResult, setWebBrowserResult] = useState(null)
     const {profilePictureUri, setProfilePictureUri} = useContext(ProfilePictureURIContext);
     const {allCredentialsStoredList, setAllCredentialsStoredList} = useContext(AllCredentialsStoredContext);
+    const {hasOpenedSocialSquare, setHasOpenedSocialSquare} = useContext(HasOpenedSocialSquareContext);
 
     const clearLogin = () => {
         AsyncStorage.removeItem('SocialSquareDMsList');
@@ -145,7 +147,7 @@ const SettingsPage = ({navigation}) => {
                             <SettingsItemImage style={{tintColor: colors.tertiary}} source={require('./../assets/icomoon-icons/IcoMoon-Free-master/PNG/64px/207-eye.png')}/>
                             <SettingsItemText style={{color: colors.tertiary}}>App Styling</SettingsItemText>
                         </SettingsPageItemTouchableOpacity>
-                        <SettingsPageItemTouchableOpacity disabled={!logoutViewState} style={{borderColor: colors.borderColor}} onPress={() => {Linking.openURL('https://github.com/SquareTable/SocialSquare-Desktop/issues/new')}}>
+                        <SettingsPageItemTouchableOpacity disabled={!logoutViewState} style={{borderColor: colors.borderColor}} onPress={() => {Linking.openURL('https://github.com/SquareTable/SocialSquare-Desktop/issues/new?assignees=&labels=&template=bug_report.md&title=Write+issue+here')}}>
                             <SettingsItemImage style={{tintColor: colors.tertiary}} source={require('./../assets/icomoon-icons/IcoMoon-Free-master/PNG/64px/265-notification.png')}/>
                             <SettingsItemText style={{color: colors.tertiary}}>Report bug</SettingsItemText>
                         </SettingsPageItemTouchableOpacity>
@@ -161,7 +163,7 @@ const SettingsPage = ({navigation}) => {
                                 <Text style={{color: colors.tertiary, fontSize: 16, textAlign: 'center', padding: 7}}>Press here to visit the SocialSquare GitHub repo</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity disabled={!logoutViewState} style={{marginHorizontal: '20%', borderColor: colors.borderColor, borderWidth: 5, borderRadius: 20/2, marginTop: 20}} onPress={seeAppIntroductionScreenAgainButtonOnPress}>
+                        <TouchableOpacity disabled={!logoutViewState} style={{marginHorizontal: '20%', borderColor: colors.borderColor, borderWidth: 5, borderRadius: 20/2, marginTop: 20}} onPress={() => {setHasOpenedSocialSquare(false)}}>
                             <View>
                                 <Text style={{color: colors.tertiary, fontSize: 16, textAlign: 'center', padding: 7}}>See app introduction screen again</Text>
                             </View>

@@ -860,7 +860,7 @@ export const ProfileOptionsView = styled.View`
 
 export const ProfileOptionsViewButtons = styled.TouchableOpacity`
     height: 20%;
-    margin-top: 5%;
+    margin-top: 3%;
     align-items: center;
     justify-content: center;
     width: 80%;

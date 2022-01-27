@@ -11,6 +11,7 @@ import { AllCredentialsStoredContext } from "./components/AllCredentialsStoredCo
 import { ShowAccountSwitcherContext } from "./components/ShowAccountSwitcherContext.js";
 import NetInfo from "@react-native-community/netinfo";
 import { AppStylingContext } from "./components/AppStylingContext.js";
+import { HasOpenedSocialSquareContext } from "./components/HasOpenedSocialSquareContext.js";
 
 const App = () => {
   const [storedCredentials, setStoredCredentials] = useState(null);
@@ -20,6 +21,7 @@ const App = () => {
   const [showAccountSwitcher, setShowAccountSwitcher] = useState(false);
   const AppColorScheme = useColorScheme();
   const [AppStylingContextState, setAppStylingContextState] = useState('Default');
+  const [hasOpenedSocialSquare, setHasOpenedSocialSquare] = useState(false);
   const AppDarkTheme = {
     dark: true,
     colors: {
@@ -252,6 +254,20 @@ const App = () => {
         console.error('AppStylingContextState was not set to Default, Dark, or Light. Setting to Default')
       }
     }).catch((error) => {console.error('Error getting AppStylingContextState', error)})
+    await AsyncStorage.getItem('hasOpenedSocialSquare').then((result) => {
+      if (!result) {
+        setHasOpenedSocialSquare(false);
+        AsyncStorage.setItem('hasOpenedSocialSquare', 'false');
+      } else if (result == 'true') {
+        setHasOpenedSocialSquare(true);
+      } else if (result == 'false') {
+        setHasOpenedSocialSquare(false);
+      } else {
+        setHasOpenedSocialSquare(false);
+        AsyncStorage.setItem('hasOpenedSocialSquare', 'false');
+        console.error('hasOpenedSocialSquare was not set to true or false. Setting to false')
+      }
+    })
     setIsReady(true);
   }
   useEffect(() => {
@@ -272,9 +288,11 @@ const App = () => {
           <AllCredentialsStoredContext.Provider value={{allCredentialsStoredList, setAllCredentialsStoredList}}>
             <ShowAccountSwitcherContext.Provider value={{showAccountSwitcher, setShowAccountSwitcher}}>
               <AppStylingContext.Provider value={{AppStylingContextState, setAppStylingContextState}}>
-                <NavigationContainer theme={AppStylingContextState == 'Default' ? AppColorScheme == 'dark' ? AppDarkTheme : AppLightTheme : AppStylingContextState == 'Dark' ? AppDarkTheme : AppStylingContextState == 'Light' ? AppLightTheme : undefined}>
-                  <Start_Stack/>
-                </NavigationContainer>
+                <HasOpenedSocialSquareContext.Provider value={{hasOpenedSocialSquare, setHasOpenedSocialSquare}}>
+                  <NavigationContainer theme={AppStylingContextState == 'Default' ? AppColorScheme == 'dark' ? AppDarkTheme : AppLightTheme : AppStylingContextState == 'Dark' ? AppDarkTheme : AppStylingContextState == 'Light' ? AppLightTheme : undefined}>
+                    <Start_Stack hasOpenedSocialSquare={hasOpenedSocialSquare}/>
+                  </NavigationContainer>
+                </HasOpenedSocialSquareContext.Provider>
               </AppStylingContext.Provider>
             </ShowAccountSwitcherContext.Provider>
           </AllCredentialsStoredContext.Provider>

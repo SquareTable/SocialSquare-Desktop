@@ -2474,7 +2474,7 @@ const ProfilePages = ({ route, navigation }) => {
     return (
         <>
             <Animated.View style={{opacity: ProfileOptionsViewOpacity, zIndex: ProfileOptionsViewOpacity.interpolate({inputRange: [0, 1], outputRange: [-10, 3]})}}>
-                <ProfileOptionsView style={{backgroundColor: colors.primary}} viewHidden={false}>
+                <ProfileOptionsView style={{backgroundColor: colors.primary, top: -180}} viewHidden={false}>
                     <ProfileOptionsViewText style={{color: colors.tertiary}}>{profilesDisplayName || "Couldn't get profile display name"}</ProfileOptionsViewText>
                     <ProfileOptionsViewSubtitleText style={{color: colors.tertiary}}>Options</ProfileOptionsViewSubtitleText>
                     <ProfileOptionsViewButtons greyButton={true} onPress={changeProfilesOptionsView}>
