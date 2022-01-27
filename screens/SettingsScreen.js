@@ -29,7 +29,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //credentials context
 import { StoredCredentialsContext } from '../components/StoredCredentialsContext';
-import { ImageBackground, ScrollView, Text, TouchableOpacity, View, Image } from 'react-native';
+import { ImageBackground, ScrollView, Text, TouchableOpacity, View, Image, Linking } from 'react-native';
 import SocialSquareLogo_B64_png from '../assets/SocialSquareLogo_Base64_png.js';
 import { ProfilePictureURIContext } from '../components/ProfilePictureURIContext.js';
 import { AllCredentialsStoredContext } from '../components/AllCredentialsStoredContext.js';
@@ -145,7 +145,7 @@ const SettingsPage = ({navigation}) => {
                             <SettingsItemImage style={{tintColor: colors.tertiary}} source={require('./../assets/icomoon-icons/IcoMoon-Free-master/PNG/64px/207-eye.png')}/>
                             <SettingsItemText style={{color: colors.tertiary}}>App Styling</SettingsItemText>
                         </SettingsPageItemTouchableOpacity>
-                        <SettingsPageItemTouchableOpacity disabled={!logoutViewState} style={{borderColor: colors.borderColor}} onPress={() => {navigation.navigate('ReportBugScreen')}}>
+                        <SettingsPageItemTouchableOpacity disabled={!logoutViewState} style={{borderColor: colors.borderColor}} onPress={() => {Linking.openURL('https://github.com/SquareTable/SocialSquare-Desktop/issues/new')}}>
                             <SettingsItemImage style={{tintColor: colors.tertiary}} source={require('./../assets/icomoon-icons/IcoMoon-Free-master/PNG/64px/265-notification.png')}/>
                             <SettingsItemText style={{color: colors.tertiary}}>Report bug</SettingsItemText>
                         </SettingsPageItemTouchableOpacity>
@@ -156,7 +156,7 @@ const SettingsPage = ({navigation}) => {
                         <Text style={{color: colors.tertiary, fontSize: 24, textAlign: 'center'}}>© SquareTable 2022</Text>
                         <Text style={{color: colors.tertiary, fontSize: 24, textAlign: 'center', marginBottom: 10}}>All Rights Reserved</Text>
                         <Text style={{color: colors.tertiary, fontSize: 18, textAlign: 'center', marginBottom: 10}}>Made by Sebastian Webster, Kovid Dev, Didula Semasinghe, and Jacob Bowden</Text>
-                        <TouchableOpacity disabled={!logoutViewState} style={{marginHorizontal: '20%', borderColor: colors.borderColor, borderWidth: 5, borderRadius: 20/2}} onPressOut={() => {alert('Feature coming soon')}}>
+                        <TouchableOpacity disabled={!logoutViewState} style={{marginHorizontal: '20%', borderColor: colors.borderColor, borderWidth: 5, borderRadius: 20/2}} onPressOut={() => {Linking.openURL('https://github.com/SquareTable/SocialSquare-Desktop')}}>
                             <View>
                                 <Text style={{color: colors.tertiary, fontSize: 16, textAlign: 'center', padding: 7}}>Press here to visit the SocialSquare GitHub repo</Text>
                             </View>
@@ -166,10 +166,10 @@ const SettingsPage = ({navigation}) => {
                                 <Text style={{color: colors.tertiary, fontSize: 16, textAlign: 'center', padding: 7}}>See app introduction screen again</Text>
                             </View>
                         </TouchableOpacity>
-                        <TextLink disabled={!logoutViewState} style={{marginTop: 10}} onPress={() => {alert('https://squaretable.github.io/social-media-platform/TermsAndConditions')}}>
+                        <TextLink disabled={!logoutViewState} style={{marginTop: 10}} onPress={() => {Linking.openURL('https://squaretable.github.io/social-media-platform/TermsAndConditions')}}>
                             <TextLinkContent style={{color: colors.brand}}>Terms of Service</TextLinkContent>
                         </TextLink>
-                        <TextLink disabled={!logoutViewState} onPress={() => {alert('https://squaretable.github.io/social-media-platform/PrivacyPolicy')}}>
+                        <TextLink disabled={!logoutViewState} onPress={() => {Linking.openURL('https://squaretable.github.io/social-media-platform/PrivacyPolicy')}}>
                             <TextLinkContent style={{color: colors.brand}}>Privacy Policy</TextLinkContent>
                         </TextLink>
                     </WelcomeContainer>

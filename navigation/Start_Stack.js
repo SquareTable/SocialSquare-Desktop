@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StoredCredentialsContext } from '../components/StoredCredentialsContext';
 import Tabs from './tabs';
 import LoginScreen from '../screens/LoginScreen';
+import Signup from '../screens/Signup';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ export const Start_Stack = () => {
             : 
                 <>
                     <Stack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown: false}}/>
+                    <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
                 </>
             }
         </Stack.Navigator>

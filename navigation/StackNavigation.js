@@ -13,6 +13,12 @@ import CategoryCreationPage from '../screens/CategoryCreationPage';
 import ThreadUploadPage from '../screens/PostScreens/ThreadUploadPage';
 import SelectCategorySearchScreen from '../screens/SelectCategorySearchScreen';
 import ProfilePages from '../screens/ProfilePages';
+import CategoryViewPage from '../screens/CategoryViewPage';
+import ViewImagePostPage from '../screens/ViewImagePostPage';
+import ThreadViewPage from '../screens/ThreadViewPage';
+import ViewPollPostPage from '../screens/ViewPollPostPage';
+import AccountBadges from '../screens/BadgesScreen';
+import AppStyling from '../screens/AppStyling';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +35,10 @@ export const FindScreenStack = () => {
         <Stack.Navigator>
             <Stack.Screen name="FindScreen" component={FindScreen} options={{headerShown: false}}/>
             <Stack.Screen name="ProfilePages" component={ProfilePages} options={{headerShown: false}}/>
+            <Stack.Screen name="CategoryViewPage" component={CategoryViewPage} options={{headerShown: false}}/>
+            <Stack.Screen name="ViewImagePostPage" component={ViewImagePostPage} options={{headerShown: false}}/>
+            <Stack.Screen name="ThreadViewPage" component={ThreadViewPage} options={{headerShown: false}}/>
+            <Stack.Screen name="ViewPollPostPage" component={ViewPollPostPage} options={{headerShown: false}}/>
         </Stack.Navigator>
     );
 }
@@ -60,6 +70,12 @@ export const ProfileScreenStack = () => {
         <Stack.Navigator>
             <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{headerShown: false}}/>
             <Stack.Screen name='SettingsScreen' component={SettingsPage} options={{headerShown: false}}/>
+            <Stack.Screen name="CategoryViewPage" component={CategoryViewPage} options={{headerShown: false}}/>
+            <Stack.Screen name="ViewImagePostPage" component={ViewImagePostPage} options={{headerShown: false}}/>
+            <Stack.Screen name="ThreadViewPage" component={ThreadViewPage} options={{headerShown: false}}/>
+            <Stack.Screen name="ViewPollPostPage" component={ViewPollPostPage} options={{headerShown: false}}/>
+            <Stack.Screen name="AccountBadges" component={AccountBadges} options={{headerShown: false}}/>
+            <Stack.Screen name="AppStyling" component={AppStyling} options={{headerShown: false}}/>
         </Stack.Navigator>
     );
 }

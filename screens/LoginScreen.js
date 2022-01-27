@@ -29,7 +29,7 @@ import {
     TextLink,
     TextLinkContent,
 } from '../components/styling.js';
-import {View, ActivityIndicator, ImageBackground, StyleSheet, Text} from 'react-native';
+import {View, ActivityIndicator, ImageBackground, StyleSheet, Text, ScrollView} from 'react-native';
 
 // Colors
 const {brand, primary, tertiary} = Colors;
@@ -242,7 +242,7 @@ const LoginScreen = ({navigation, route}) => {
         navigation.goBack()
     }
     return(
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ScrollView style={{flex: 1}} contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
             <PageLogo source={require('./../assets/img/Logo.png')} />
             <PageTitle style={{color: colors.tertiary}}>SocialSquare</PageTitle>
             <SubTitle style={{color: colors.tertiary}}>Login Page</SubTitle>
@@ -313,7 +313,7 @@ const LoginScreen = ({navigation, route}) => {
                         }
                     </StyledFormArea>)}
             </Formik>
-        </View>
+        </ScrollView>
     );
 }
 
