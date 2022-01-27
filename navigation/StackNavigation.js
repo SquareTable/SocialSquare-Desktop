@@ -11,6 +11,8 @@ import SettingsPage from '../screens/SettingsScreen';
 import PollUploadPage from '../screens/PostScreens/PollUploadPage';
 import CategoryCreationPage from '../screens/CategoryCreationPage';
 import ThreadUploadPage from '../screens/PostScreens/ThreadUploadPage';
+import SelectCategorySearchScreen from '../screens/SelectCategorySearchScreen';
+import ProfilePages from '../screens/ProfilePages';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +28,7 @@ export const FindScreenStack = () => {
     return(
         <Stack.Navigator>
             <Stack.Screen name="FindScreen" component={FindScreen} options={{headerShown: false}}/>
+            <Stack.Screen name="ProfilePages" component={ProfilePages} options={{headerShown: false}}/>
         </Stack.Navigator>
     );
 }
@@ -39,6 +42,7 @@ export const PostScreenStack = () => {
             <Stack.Screen name="PollUploadPage" component={PollUploadPage} options={{headerShown: false}}/>
             <Stack.Screen name="CategoryCreationPage" component={CategoryCreationPage} options={{headerShown: false}}/>
             <Stack.Screen name="ThreadUploadPage" component={ThreadUploadPage} options={{headerShown: false}}/>
+            <Stack.Screen name="SelectCategorySearchScreen" component={SelectCategorySearchScreen} options={{headerShown: false}}/>
         </Stack.Navigator>
     );
 }
