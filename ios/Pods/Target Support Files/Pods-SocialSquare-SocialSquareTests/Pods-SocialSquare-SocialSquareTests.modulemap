@@ -1,0 +1,6 @@
+module Pods_SocialSquare_SocialSquareTests {
+  umbrella header "Pods-SocialSquare-SocialSquareTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

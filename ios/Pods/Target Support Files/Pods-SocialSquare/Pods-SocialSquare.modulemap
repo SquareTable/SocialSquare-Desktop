@@ -1,0 +1,6 @@
+module Pods_SocialSquare {
+  umbrella header "Pods-SocialSquare-umbrella.h"
+
+  export *
+  module * { export * }
+}
