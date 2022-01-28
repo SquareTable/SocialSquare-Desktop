@@ -1,5 +1,0 @@
-#import <Foundation/Foundation.h>
-@interface PodsDummy_Pods_SocialSquareDesktop_SocialSquareDesktopTests : NSObject
-@end
-@implementation PodsDummy_Pods_SocialSquareDesktop_SocialSquareDesktopTests
-@end
