@@ -5,11 +5,13 @@ import Tabs from './tabs';
 import LoginScreen from '../screens/LoginScreen';
 import Signup from '../screens/Signup';
 import IntroScreen from '../screens/IntroductionScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 
 export const Start_Stack = ({hasOpenedSocialSquare}) => {
     const {storedCredentials, setStoredCredentials} = useContext(StoredCredentialsContext);
+    AsyncStorage.setItem('hasOpenedSocialSquare', 'true');
     return(
         <Stack.Navigator screenOptions={{headerShown: false}}>
             {hasOpenedSocialSquare == true ?

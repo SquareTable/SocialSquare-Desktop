@@ -140,6 +140,7 @@ const IntroScreen = () => {
             renderPrevButton={renderBackButton}
             renderSkipButton={renderSkipButton}
             renderDoneButton={renderDoneButton}
+            scrollEnabled={false}
         />
     );
 }
