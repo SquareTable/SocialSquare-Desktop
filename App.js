@@ -1,5 +1,5 @@
 //import 'react-native-gesture-handler';
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {View, Text, useColorScheme} from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { StoredCredentialsContext } from "./components/StoredCredentialsContext.js";
@@ -24,6 +24,10 @@ const App = () => {
   const [AppStylingContextState, setAppStylingContextState] = useState('Default');
   const [hasOpenedSocialSquare, setHasOpenedSocialSquare] = useState(false);
   const [refreshAppStyling, setRefreshAppStyling] = useState(false);
+  const [currentSimpleStylingData, setCurrentSimpleStylingData] = useState();
+  const previousStylingState = useRef(null)
+  const AsyncSimpleStyling_ParsedRef = useRef(null)
+  const [AsyncStorageSimpleStylingData, setAsyncStorageSimpleStylingData] = useState()
   const AppDarkTheme = {
     dark: true,
     colors: {
@@ -39,7 +43,6 @@ const App = () => {
       greyish: '#D8DEE9',
       bronzeRarity: '#b08d57',
       darkestBlue: '#5E81AC',
-      StatusBarColor: 'light',
       navFocusedColor: '#88C0D0',
       navNonFocusedColor: '#ECEFF4',
       borderColor: '#2E3440',
@@ -69,7 +72,6 @@ const App = () => {
       greyish: '#D8DEE9',
       bronzeRarity: '#b08d57',
       darkestBlue: '#5E81AC',
-      StatusBarColor: 'dark',
       navFocusedColor: '#5E81AC',
       navNonFocusedColor: '#2E3440',
       borderColor: '#D8DEE9',
@@ -99,7 +101,6 @@ const App = () => {
       greyish: '#D8DEE9',
       bronzeRarity: '#b08d57',
       darkestBlue: '#5E81AC',
-      StatusBarColor: 'light',
       navFocusedColor: '#81A1C1',
       navNonFocusedColor: 'white',
       borderColor: '#D8DEE9',
@@ -129,7 +130,6 @@ const App = () => {
       greyish: '#D8DEE9',
       bronzeRarity: '#b08d57',
       darkestBlue: '#5E81AC',
-      StatusBarColor: 'dark',
       navFocusedColor: '#5E81AC',
       navNonFocusedColor: '#2E3440',
       borderColor: '#D8DEE9',
@@ -144,6 +144,63 @@ const App = () => {
       searchScreenType: 'Regular',
     }
   };
+
+  const setCurrentSimpleStylingDataToStyle = (SimpleAppStyleIndexNum) => {
+    const simpleStylingData = AsyncStorageSimpleStylingData;
+    console.log(simpleStylingData);
+    try {
+      for (let i = 0; i < simpleStylingData.length; i++) {
+        if (simpleStylingData[i].indexNum == parseInt(SimpleAppStyleIndexNum)) {
+            setCurrentSimpleStylingData(simpleStylingData[i])
+            console.log(simpleStylingData[i])
+            previousStylingState.current = SimpleAppStyleIndexNum
+        }
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
+  useEffect(() => {
+    async function getAsyncSimpleStyling() {
+      let AsyncSimpleStyling = await AsyncStorage.getItem('simpleStylingData')
+      let AsyncSimpleStyling_Parsed = JSON.parse(AsyncSimpleStyling)
+      if (AsyncSimpleStyling_Parsed != AsyncSimpleStyling_ParsedRef.current) {
+        setAsyncStorageSimpleStylingData(AsyncSimpleStyling_Parsed)
+        AsyncSimpleStyling_ParsedRef.current = AsyncSimpleStyling_Parsed
+        console.log('Setting Async Storage Data in App.js')
+      }
+      console.log('AsyncSimpleStyling is: ' + AsyncSimpleStyling_Parsed)
+    }
+    getAsyncSimpleStyling()
+  }, [])
+
+  useEffect(() => {
+    async function firstTime_getAsyncSimpleStyling() {
+      let AsyncSimpleStyling = await AsyncStorage.getItem('simpleStylingData')
+      let AsyncSimpleStyling_Parsed = JSON.parse(AsyncSimpleStyling)
+      setAsyncStorageSimpleStylingData(AsyncSimpleStyling_Parsed)
+      AsyncSimpleStyling_ParsedRef.current = AsyncSimpleStyling_Parsed
+    }
+    firstTime_getAsyncSimpleStyling()
+  }, [])
+
+  console.log('App Styling Context State is: ' + AppStylingContextState)
+  console.log('App is currently using this style: ' + currentSimpleStylingData)
+
+  if (refreshAppStyling == true) {
+    console.warn('Refreshing app styling')
+    async function getAsyncSimpleStyling() {
+      let AsyncSimpleStyling = await AsyncStorage.getItem('simpleStylingData')
+      let AsyncSimpleStyling_Parsed = JSON.parse(AsyncSimpleStyling)
+      setAsyncStorageSimpleStylingData(AsyncSimpleStyling_Parsed)
+      AsyncSimpleStyling_ParsedRef.current = AsyncSimpleStyling_Parsed
+    }
+    setRefreshAppStyling(false)
+    getAsyncSimpleStyling()
+    setCurrentSimpleStylingDataToStyle(AppStylingContextState)
+  }
+
   async function setUpApp() {
     await AsyncStorage.getItem('socialSquareCredentials').then((result) => {
       if (!result) {
@@ -251,9 +308,7 @@ const App = () => {
       } else if (result == 'Light') {
         setAppStylingContextState('Light');
       } else {
-        setAppStylingContextState('Default')
-        AsyncStorage.setItem('AppStylingContextState', 'Default');
-        console.error('AppStylingContextState was not set to Default, Dark, or Light. Setting to Default')
+        setAppStylingContextState(result)
       }
     }).catch((error) => {console.error('Error getting AppStylingContextState', error)})
     await AsyncStorage.getItem('hasOpenedSocialSquare').then((result) => {
@@ -292,7 +347,8 @@ const App = () => {
               <AppStylingContext.Provider value={{AppStylingContextState, setAppStylingContextState}}>
                 <HasOpenedSocialSquareContext.Provider value={{hasOpenedSocialSquare, setHasOpenedSocialSquare}}>
                   <RefreshAppStylingContext.Provider value={{refreshAppStyling, setRefreshAppStyling}}>
-                    <NavigationContainer theme={AppStylingContextState == 'Default' ? AppColorScheme == 'dark' ? AppDarkTheme : AppLightTheme : AppStylingContextState == 'Dark' ? AppDarkTheme : AppStylingContextState == 'Light' ? AppLightTheme : AppStylingContextState == 'PureDark' ? AppPureDarkTheme : AppStylingContextState == 'PureLight' ? AppPureLightTheme : undefined}>
+                    {AppStylingContextState != 'Default' && AppStylingContextState != 'Light' && AppStylingContextState != 'Dark' && AppStylingContextState != 'PureDark' && AppStylingContextState != 'PureLight' ? previousStylingState.current != AppStylingContextState ? setCurrentSimpleStylingDataToStyle(AppStylingContextState) : null : null}
+                    <NavigationContainer theme={AppStylingContextState == 'Default' ? AppColorScheme == 'dark' ? AppDarkTheme : AppLightTheme : AppStylingContextState == 'Dark' ? AppDarkTheme : AppStylingContextState == 'Light' ? AppLightTheme : AppStylingContextState == 'PureDark' ? AppPureDarkTheme : AppStylingContextState == 'PureLight' ? AppPureLightTheme : currentSimpleStylingData}>
                       <Start_Stack hasOpenedSocialSquare={hasOpenedSocialSquare}/>
                     </NavigationContainer>
                   </RefreshAppStylingContext.Provider>

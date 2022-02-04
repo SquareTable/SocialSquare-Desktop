@@ -25,6 +25,8 @@ import ChangeUsernamePage from '../screens/ChangeUsernamePage';
 import ChangeEmailPage from '../screens/ChangeEmailPage';
 import OtherStyles from '../screens/OtherStyles';
 import CustomStylesMenu from '../screens/StylingScreens/CustomStylesMenu';
+import EditCustomStyle from '../screens/StylingScreens/EditCustomStyle';
+import ColorPickerScreen from '../screens/StylingScreens/ColorPicker';
 
 const Stack = createStackNavigator();
 
@@ -88,6 +90,8 @@ export const ProfileScreenStack = () => {
             <Stack.Screen name="ChangeEmailPage" component={ChangeEmailPage} options={{headerShown: false}}/>
             <Stack.Screen name="OtherStyles" component={OtherStyles} options={{headerShown: false}}/>
             <Stack.Screen name="CustomStylesMenu" component={CustomStylesMenu} options={{headerShown: false}}/>
+            <Stack.Screen name="EditCustomStyle" component={EditCustomStyle} options={{headerShown: false}}/>
+            <Stack.Screen name="ColorPickerScreen" component={ColorPickerScreen} options={{headerShown: false}}/>
         </Stack.Navigator>
     );
 }

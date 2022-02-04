@@ -138,7 +138,6 @@ const CustomStylesMenu = ({navigation, route}) => {
                 greyish: colors.greyish,
                 bronzeRarity: colors.bronzeRarity,
                 darkestBlue: colors.darkestBlue,
-                StatusBarColor: colors.StatusBarColor,
                 navFocusedColor: colors.navFocusedColor,
                 navNonFocusedColor: colors.navNonFocusedColor,
                 orange: colors.orange,
@@ -218,82 +217,8 @@ const CustomStylesMenu = ({navigation, route}) => {
             let data_parsed = JSON.parse(data);
             let temp_data = [];
             for (let i = 0; i < data_parsed.length; i++) {
-                if (data_parsed[i].stylingVersion == undefined) {
-                    let {name, indexNum, dark, colors} = data_parsed[i];
-                    let { primary, tertiary, borderColor, background, secondary, darkLight, brand, green, red, darkest, greyish, bronzeRarity, darkestBlue, StatusBarColor, navFocusedColor, navNonFocusedColor, orange, yellow, purple, slightlyLighterGrey, midWhite, slightlyLighterPrimary, descTextColor } = colors;
-                    console.log(name)
-                    confirmDelete(name, indexNum);
-                    temp_data.push({
-                        name: name,
-                        indexNum: indexNum,
-                        dark: dark,
-                        stylingType: 'simple',
-                        stylingVersion: 2,
-                        colors: {
-                            primary: primary,
-                            tertiary: tertiary,
-                            borderColor: borderColor,
-                            background: background,
-                            secondary: secondary,
-                            darkLight: darkLight,
-                            brand: brand,
-                            green: green,
-                            red: red,
-                            darkest: darkest,
-                            greyish: greyish,
-                            bronzeRarity: bronzeRarity,
-                            darkestBlue: darkestBlue,
-                            StatusBarColor: StatusBarColor,
-                            navFocusedColor: navFocusedColor,
-                            navNonFocusedColor: navNonFocusedColor,
-                            orange: orange,
-                            yellow: yellow,
-                            purple: purple,
-                            slightlyLighterGrey: slightlyLighterGrey,
-                            midWhite: midWhite,
-                            slightlyLighterPrimary: slightlyLighterPrimary,
-                            descTextColor: descTextColor,
-                            errorColor: '#FF0000'
-                        }
-                    });
-                } else if (data_parsed[i].stylingVersion == 2) {
-                    let {name, indexNum, dark, colors} = data_parsed[i];
-                    let { primary, tertiary, borderColor, background, secondary, darkLight, brand, green, red, darkest, greyish, bronzeRarity, darkestBlue, StatusBarColor, navFocusedColor, navNonFocusedColor, orange, yellow, purple, slightlyLighterGrey, midWhite, slightlyLighterPrimary, descTextColor, errorColor } = colors;
-                    console.log(name)
-                    confirmDelete(name, indexNum);
-                    temp_data.push({
-                        name: name,
-                        indexNum: indexNum,
-                        dark: dark,
-                        stylingType: 'simple',
-                        stylingVersion: 3,
-                        colors: {
-                            primary: primary,
-                            tertiary: tertiary,
-                            borderColor: borderColor,
-                            background: background,
-                            secondary: secondary,
-                            darkLight: darkLight,
-                            brand: brand,
-                            green: green,
-                            red: red,
-                            darkest: darkest,
-                            greyish: greyish,
-                            bronzeRarity: bronzeRarity,
-                            darkestBlue: darkestBlue,
-                            StatusBarColor: StatusBarColor,
-                            navFocusedColor: navFocusedColor,
-                            navNonFocusedColor: navNonFocusedColor,
-                            orange: orange,
-                            yellow: yellow,
-                            purple: purple,
-                            slightlyLighterGrey: slightlyLighterGrey,
-                            midWhite: midWhite,
-                            slightlyLighterPrimary: slightlyLighterPrimary,
-                            descTextColor: descTextColor,
-                            errorColor: errorColor,
-                        }
-                    })
+                if (data_parsed[i].stylingVersion == 1) {
+                    //Update code goes here when there is an update to be made
                 }
             }
             data = await AsyncStorage.getItem('simpleStylingData');
@@ -603,7 +528,7 @@ const CustomStylesMenu = ({navigation, route}) => {
                                                 <TouchableOpacity onPress={() => {showVersionReleaseNotes(item.stylingVersion)}} style={{justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
                                                     <Text style={{borderColor: colors.borderColor, borderWidth: 1, borderRadius: 5, color: colors.tertiary, textAlign: 'center', marginLeft: 5, padding: 5}}>V{item.stylingVersion || ' ERROR'}</Text>
                                                 </TouchableOpacity>
-                                                <TouchableOpacity onPress={() => {item.stylingVersion == StylingVersion ? navigation.navigate('EditSimpleStyle', {name: item.name, indexNum: item.indexNum, type: null, dark: item.dark, stylingType: item.stylingType, stylingVersion: item.stylingVersion, primary: item.colors.primary, tertiary: item.colors.tertiary, borderColor: item.colors.borderColor, background: item.colors.background, secondary: item.colors.secondary, darkLight: item.colors.darkLight, brand: item.colors.brand, green: item.colors.green, red: item.colors.red, darkest: item.colors.darkest, greyish: item.colors.greyish, bronzeRarity: item.colors.bronzeRarity, darkestBlue: item.colors.darkestBlue, StatusBarColor: item.colors.StatusBarColor, navFocusedColor: item.colors.navFocusedColor, navNonFocusedColor: item.colors.navNonFocusedColor, orange: item.colors.orange, yellow: item.colors.yellow, purple: item.colors.purple, slightlyLighterGrey: item.colors.slightlyLighterGrey, midWhite: item.colors.midWhite, slightlyLighterPrimary: item.colors.slightlyLighterPrimary, descTextColor: item.colors.descTextColor, errorColor: item.colors.errorColor, backToProfileScreen: backToProfileScreen}) : showCannotEditStyleBecauseOfOutdatedStylingMessage()}} style={{position: 'absolute', right: 45, top: -7}}>
+                                                <TouchableOpacity onPress={() => {item.stylingVersion == StylingVersion ? navigation.navigate('EditCustomStyle', {name: item.name, indexNum: item.indexNum, type: null, dark: item.dark, stylingType: item.stylingType, stylingVersion: item.stylingVersion, primary: item.colors.primary, tertiary: item.colors.tertiary, borderColor: item.colors.borderColor, background: item.colors.background, secondary: item.colors.secondary, darkLight: item.colors.darkLight, brand: item.colors.brand, green: item.colors.green, red: item.colors.red, darkest: item.colors.darkest, greyish: item.colors.greyish, bronzeRarity: item.colors.bronzeRarity, darkestBlue: item.colors.darkestBlue, navFocusedColor: item.colors.navFocusedColor, navNonFocusedColor: item.colors.navNonFocusedColor, orange: item.colors.orange, yellow: item.colors.yellow, purple: item.colors.purple, slightlyLighterGrey: item.colors.slightlyLighterGrey, midWhite: item.colors.midWhite, slightlyLighterPrimary: item.colors.slightlyLighterPrimary, descTextColor: item.colors.descTextColor, errorColor: item.colors.errorColor, backToProfileScreen: backToProfileScreen}) : showCannotEditStyleBecauseOfOutdatedStylingMessage()}} style={{position: 'absolute', right: 45, top: -7}}>
                                                     <Octicons name={"pencil"} size={40} color={colors.brand} />
                                                 </TouchableOpacity>
                                                 <TouchableOpacity onPress={() => {setListOfDataGettingDeleted(listOfDataGettingDeleted => [...listOfDataGettingDeleted, index])}} style={{position: 'absolute', right: 10, top: -7}}>
