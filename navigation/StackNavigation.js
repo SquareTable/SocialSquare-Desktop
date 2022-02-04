@@ -19,6 +19,12 @@ import ThreadViewPage from '../screens/ThreadViewPage';
 import ViewPollPostPage from '../screens/ViewPollPostPage';
 import AccountBadges from '../screens/BadgesScreen';
 import AppStyling from '../screens/AppStyling';
+import AccountSettings from '../screens/AccountSettings';
+import ChangeDisplayNamePage from '../screens/ChangeDisplayNamePage';
+import ChangeUsernamePage from '../screens/ChangeUsernamePage';
+import ChangeEmailPage from '../screens/ChangeEmailPage';
+import OtherStyles from '../screens/OtherStyles';
+import CustomStylesMenu from '../screens/StylingScreens/CustomStylesMenu';
 
 const Stack = createStackNavigator();
 
@@ -76,6 +82,12 @@ export const ProfileScreenStack = () => {
             <Stack.Screen name="ViewPollPostPage" component={ViewPollPostPage} options={{headerShown: false}}/>
             <Stack.Screen name="AccountBadges" component={AccountBadges} options={{headerShown: false}}/>
             <Stack.Screen name="AppStyling" component={AppStyling} options={{headerShown: false}}/>
+            <Stack.Screen name="AccountSettings" component={AccountSettings} options={{headerShown: false}}/>
+            <Stack.Screen name="ChangeDisplayNamePage" component={ChangeDisplayNamePage} options={{headerShown: false}}/>
+            <Stack.Screen name="ChangeUsernamePage" component={ChangeUsernamePage} options={{headerShown: false}}/>
+            <Stack.Screen name="ChangeEmailPage" component={ChangeEmailPage} options={{headerShown: false}}/>
+            <Stack.Screen name="OtherStyles" component={OtherStyles} options={{headerShown: false}}/>
+            <Stack.Screen name="CustomStylesMenu" component={CustomStylesMenu} options={{headerShown: false}}/>
         </Stack.Navigator>
     );
 }

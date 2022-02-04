@@ -86,7 +86,7 @@ import {
     ViewHider,
 } from '../components/styling.js';
 import { StoredCredentialsContext } from '../components/StoredCredentialsContext.js';
-import { SimpleStylingVersion } from '../components/StylingVersionsFile.js';
+import { StylingVersion } from '../components/StylingVersionFile.js';
 import { AppStylingContext } from '../components/AppStylingContext.js';
 import axios from 'axios';
 import { ProfilePictureURIContext } from '../components/ProfilePictureURIContext.js';
@@ -689,7 +689,7 @@ const HomeScreen = ({navigation, route}) => {
                 console.log(lastVersionUsed)
                 if (lastVersionUsed == null) {
                     console.log('Last version used is null. Now running the code for null')
-                    if (lowestVersion < SimpleStylingVersion) {
+                    if (lowestVersion < StylingVersion) {
                         if (AppStylingContextState == 'Default' || AppStylingContextState == 'Dark' || AppStylingContextState == 'Light' || AppStylingContextState == 'PureDark' || AppStylingContextState == 'PureLight') {
                             setAppStylingContextState('Default')
                             console.warn('Setting styling to Default')
@@ -697,9 +697,9 @@ const HomeScreen = ({navigation, route}) => {
                         setUpdateSimpleStylesWarningHidden(false)
                         setFlatListElementsEnabledState(false)
                     }
-                    AsyncStorage.setItem('versionLastShownForSimpleStylingUpdateWarning', SimpleStylingVersion.toString())
+                    AsyncStorage.setItem('versionLastShownForSimpleStylingUpdateWarning', StylingVersion.toString())
                 } else {
-                    if (parseInt(lastVersionUsed) < SimpleStylingVersion) {
+                    if (parseInt(lastVersionUsed) < StylingVersion) {
                         console.log('Last version used is less than current simple styling version')
                         if (AppStylingContextState == 'Default' || AppStylingContextState == 'Dark' || AppStylingContextState == 'Light' || AppStylingContextState == 'PureDark' || AppStylingContextState == 'PureLight') {
                             setAppStylingContextState('Default')
@@ -707,7 +707,7 @@ const HomeScreen = ({navigation, route}) => {
                         }
                         setUpdateSimpleStylesWarningHidden(false)
                         setFlatListElementsEnabledState(false)
-                        AsyncStorage.setItem('versionLastShownForSimpleStylingUpdateWarning', SimpleStylingVersion.toString())
+                        AsyncStorage.setItem('versionLastShownForSimpleStylingUpdateWarning', StylingVersion.toString())
                     }
                 }
             } else {
@@ -732,7 +732,7 @@ const HomeScreen = ({navigation, route}) => {
             <ProfileOptionsView style={{backgroundColor: colors.primary}} viewHidden={updateSimpleStylesWarningHidden}>
                 <ScrollView style={{marginHorizontal: 10}}>
                     <Text style={{color: colors.errorColor ? colors.errorColor : 'red', fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>SocialSquare has recently been updated and the custom styles that you currently have are now out of date.</Text>
-                    <Text style={{color: colors.tertiary, fontSize: 18, textAlign: 'center', marginVertical: 10}}>At least one of your custom styles are now outdated and SocialSquare now only supports version {SimpleStylingVersion}.</Text>
+                    <Text style={{color: colors.tertiary, fontSize: 18, textAlign: 'center', marginVertical: 10}}>At least one of your custom styles are now outdated and SocialSquare now only supports version {StylingVersion}.</Text>
                     <StyledButton 
                         style={{marginVertical: 20, height: 'auto'}}
                         onPress={() => {

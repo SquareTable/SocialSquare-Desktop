@@ -96,7 +96,7 @@ const Welcome = ({navigation, route}) => {
         var {backButtonHidden, imageFromRoute, goToStylingMenu} = route.params;
         console.log(backButtonHidden)
         if (goToStylingMenu == true) {
-            navigation.replace('SimpleStylingMenu', {ableToRefresh: false, indexNumToUse: null, backToProfileScreen: true})
+            navigation.replace('CustomStylesMenu', {ableToRefresh: false, indexNumToUse: null, backToProfileScreen: true})
         }
     } else {
         var backButtonHidden = true;
@@ -112,6 +112,7 @@ const Welcome = ({navigation, route}) => {
     const {storedCredentials, setStoredCredentials} = useContext(StoredCredentialsContext);
     const {profilePictureUri, setProfilePictureUri} = useContext(ProfilePictureURIContext);
     if (storedCredentials) {var {_id, name, displayName, email, photoUrl, followers, following} = storedCredentials}
+    console.log(storedCredentials)
     const [gridViewState, setGridViewState] = useState("flex")
     const [featuredViewState, setFeaturedViewState] = useState("none")
     const [selectedPostFormat, setSelectedPostFormat] = useState("One")

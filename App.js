@@ -12,6 +12,7 @@ import { ShowAccountSwitcherContext } from "./components/ShowAccountSwitcherCont
 import NetInfo from "@react-native-community/netinfo";
 import { AppStylingContext } from "./components/AppStylingContext.js";
 import { HasOpenedSocialSquareContext } from "./components/HasOpenedSocialSquareContext.js";
+import { RefreshAppStylingContext } from "./components/RefreshAppStylingContext.js";
 
 const App = () => {
   const [storedCredentials, setStoredCredentials] = useState(null);
@@ -22,6 +23,7 @@ const App = () => {
   const AppColorScheme = useColorScheme();
   const [AppStylingContextState, setAppStylingContextState] = useState('Default');
   const [hasOpenedSocialSquare, setHasOpenedSocialSquare] = useState(false);
+  const [refreshAppStyling, setRefreshAppStyling] = useState(false);
   const AppDarkTheme = {
     dark: true,
     colors: {
@@ -289,9 +291,11 @@ const App = () => {
             <ShowAccountSwitcherContext.Provider value={{showAccountSwitcher, setShowAccountSwitcher}}>
               <AppStylingContext.Provider value={{AppStylingContextState, setAppStylingContextState}}>
                 <HasOpenedSocialSquareContext.Provider value={{hasOpenedSocialSquare, setHasOpenedSocialSquare}}>
-                  <NavigationContainer theme={AppStylingContextState == 'Default' ? AppColorScheme == 'dark' ? AppDarkTheme : AppLightTheme : AppStylingContextState == 'Dark' ? AppDarkTheme : AppStylingContextState == 'Light' ? AppLightTheme : undefined}>
-                    <Start_Stack hasOpenedSocialSquare={hasOpenedSocialSquare}/>
-                  </NavigationContainer>
+                  <RefreshAppStylingContext.Provider value={{refreshAppStyling, setRefreshAppStyling}}>
+                    <NavigationContainer theme={AppStylingContextState == 'Default' ? AppColorScheme == 'dark' ? AppDarkTheme : AppLightTheme : AppStylingContextState == 'Dark' ? AppDarkTheme : AppStylingContextState == 'Light' ? AppLightTheme : AppStylingContextState == 'PureDark' ? AppPureDarkTheme : AppStylingContextState == 'PureLight' ? AppPureLightTheme : undefined}>
+                      <Start_Stack hasOpenedSocialSquare={hasOpenedSocialSquare}/>
+                    </NavigationContainer>
+                  </RefreshAppStylingContext.Provider>
                 </HasOpenedSocialSquareContext.Provider>
               </AppStylingContext.Provider>
             </ShowAccountSwitcherContext.Provider>

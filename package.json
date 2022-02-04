@@ -35,6 +35,7 @@
     "react-native-screens": "^3.10.2",
     "react-native-vector-icons": "^9.0.0",
     "react-native-web": "^0.17.5",
+    "react-native-wheel-color-picker": "^1.2.0",
     "react-native-windows": "0.67.0",
     "styled-components": "^5.3.3"
   },

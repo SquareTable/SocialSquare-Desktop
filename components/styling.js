@@ -832,7 +832,7 @@ export const ProfileOptionsView = styled.View`
     zIndex: 9999999;
     align-self: center;
     align-items: center;
-    margin-vertical: 30%;
+    margin-vertical: 10%;
     left: -30000px;
     width: 90%;
     height: 400px;

@@ -271,6 +271,7 @@ const LoginScreen = ({navigation, route}) => {
                             autoCapitalize="none"
                             style={{backgroundColor: colors.primary, color: colors.tertiary}}
                             octiconColor={colors.brand}
+                            handleSubmit={handleSubmit}
                         />
 
                         <UserTextInput
@@ -286,6 +287,7 @@ const LoginScreen = ({navigation, route}) => {
                             setHidePassword={setHidePassword}
                             style={{backgroundColor: colors.primary, color: colors.tertiary}}
                             octiconColor={colors.brand}
+                            handleSubmit={handleSubmit}
                         />
                         <MsgBox type={messageType}>{message}</MsgBox>
                         {downloadingPfp == false ?
@@ -324,14 +326,14 @@ const styles = StyleSheet.create({
     }
 })
 
-const UserTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, octiconColor, ...props}) => {
+const UserTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, octiconColor, handleSubmit, ...props}) => {
     return(
         <View>
             <LeftIcon style={{top: 34}}>
                 <Octicons name={icon} size={30} color={octiconColor} />
             </LeftIcon>
             <StyledInputLabel>{label}</StyledInputLabel>
-            <StyledTextInput {...props} />
+            <StyledTextInput {...props} onSubmitEditing={handleSubmit}/>
             {isPassword && (
                 <RightIcon style={{top: 31}} onPress={() => setHidePassword(!hidePassword)}>
                     <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color={brand}/>

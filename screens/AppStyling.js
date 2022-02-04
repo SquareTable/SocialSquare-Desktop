@@ -14,65 +14,23 @@ import { AppStylingContext } from '../components/AppStylingContext.js';
 const AppStyling = ({navigation}) => {
     const {AppStylingContextState, setAppStylingContextState} = useContext(AppStylingContext);
     const {colors, dark} = useTheme();
-    const [buttonOneSelected, setButtonOneSelected] = useState(true)
-    const [buttonTwoSelected, setButtonTwoSelected] = useState(false)
-    const [buttonThreeSelected, setButtonThreeSelected] = useState(false)
-
-    console.log('Primary color is: ' + colors.primary)
-
-    useEffect(() => {
-        async function ChooseWhichButtonIsSelected() {
-            await AsyncStorage.getItem('AppStylingContextState').then((result) => {
-                if (result == 'Default') {
-                    setButtonOneSelected(true)
-                    setButtonTwoSelected(false)
-                    setButtonThreeSelected(false)
-                } else if (result == 'Dark') {
-                    setButtonOneSelected(false)
-                    setButtonTwoSelected(true)
-                    setButtonThreeSelected(false)
-                } else if (result == 'Light') {
-                    setButtonOneSelected(false)
-                    setButtonTwoSelected(false)
-                    setButtonThreeSelected(true)
-                } else if (result == null) {
-                    AsyncStorage.setItem('AppStylingContextState', 'Default');
-                    setButtonOneSelected(true)
-                } else {
-                    setButtonOneSelected(false)
-                    setButtonTwoSelected(false)
-                    setButtonThreeSelected(false)
-                }
-            })
-        }
-        ChooseWhichButtonIsSelected()
-    })
 
     const handleButtonOnePress = async () => {
-        if (buttonOneSelected == false) {
-            setButtonOneSelected(true)
-            setButtonTwoSelected(false)
-            setButtonThreeSelected(false)
+        if (AppStylingContextState != 'Default') {
             setAppStylingContextState('Default')
             await AsyncStorage.setItem('AppStylingContextState', 'Default')
         }
     }
 
     const handleButtonTwoPress = async () => {
-        if (buttonTwoSelected == false) {
-            setButtonOneSelected(false)
-            setButtonTwoSelected(true)
-            setButtonThreeSelected(false)
+        if (AppStylingContextState != 'Dark') {
             setAppStylingContextState('Dark')
             await AsyncStorage.setItem('AppStylingContextState', 'Dark')
         }
     }
 
     const handleButtonThreePress = async () => {
-        if (buttonThreeSelected == false) {
-            setButtonOneSelected(false)
-            setButtonTwoSelected(false)
-            setButtonThreeSelected(true)
+        if (AppStylingContextState != 'Light') {
             setAppStylingContextState('Light')
             await AsyncStorage.setItem('AppStylingContextState', 'Light')
         }
@@ -100,8 +58,8 @@ const AppStyling = ({navigation}) => {
                             <Text style={{fontSize: 16, color: colors.tertiary, textAlign: 'center', fontWeight: 'bold'}}>Device Default</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handleButtonOnePress}>
-                            <View style={{marginTop: 20, backgroundColor: colors.borderColor, minHeight: 30, height: 30, maxHeight: 30, minWidth: 30, width: 30, maxWidth: 30, borderRadius: 30/2, borderColor: buttonOneSelected ? colors.brand : colors.tertiary, borderWidth: 2, justifyContent: 'center', alignItems: 'center'}}>
-                                {buttonOneSelected && (
+                            <View style={{marginTop: 20, backgroundColor: colors.borderColor, minHeight: 30, height: 30, maxHeight: 30, minWidth: 30, width: 30, maxWidth: 30, borderRadius: 30/2, borderColor: AppStylingContextState == 'Default' ? colors.brand : colors.tertiary, borderWidth: 2, justifyContent: 'center', alignItems: 'center'}}>
+                                {AppStylingContextState == 'Default' && (
                                     <View style={{backgroundColor: colors.tertiary, minHeight: 15, height: 15, maxHeight: 15, minWidth: 15, width: 15, maxWidth: 15, borderRadius: 15/2}}/>
                                 )}
                             </View>
@@ -115,8 +73,8 @@ const AppStyling = ({navigation}) => {
                             <Text style={{fontSize: 16, color: colors.tertiary, textAlign: 'center', fontWeight: 'bold'}}>Dark</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handleButtonTwoPress}>
-                            <View style={{marginTop: 20, backgroundColor: colors.borderColor, minHeight: 30, height: 30, maxHeight: 30, minWidth: 30, width: 30, maxWidth: 30, borderRadius: 30/2, borderColor: buttonTwoSelected ? colors.brand : colors.tertiary, borderWidth: 2, justifyContent: 'center', alignItems: 'center'}}>
-                                {buttonTwoSelected && (
+                            <View style={{marginTop: 20, backgroundColor: colors.borderColor, minHeight: 30, height: 30, maxHeight: 30, minWidth: 30, width: 30, maxWidth: 30, borderRadius: 30/2, borderColor: AppStylingContextState == 'Dark' ? colors.brand : colors.tertiary, borderWidth: 2, justifyContent: 'center', alignItems: 'center'}}>
+                                {AppStylingContextState == 'Dark' && (
                                     <View style={{backgroundColor: colors.tertiary, minHeight: 15, height: 15, maxHeight: 15, minWidth: 15, width: 15, maxWidth: 15, borderRadius: 15/2}}/>
                                 )}
                             </View>
@@ -130,8 +88,8 @@ const AppStyling = ({navigation}) => {
                             <Text style={{fontSize: 16, color: colors.tertiary, textAlign: 'center', fontWeight: 'bold'}}>Light</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handleButtonThreePress}>
-                            <View style={{marginTop: 20, backgroundColor: colors.borderColor, minHeight: 30, height: 30, maxHeight: 30, minWidth: 30, width: 30, maxWidth: 30, borderRadius: 30/2, borderColor: buttonThreeSelected ? colors.brand : colors.tertiary, borderWidth: 2, justifyContent: 'center', alignItems: 'center'}}>
-                                {buttonThreeSelected && (
+                            <View style={{marginTop: 20, backgroundColor: colors.borderColor, minHeight: 30, height: 30, maxHeight: 30, minWidth: 30, width: 30, maxWidth: 30, borderRadius: 30/2, borderColor: AppStylingContextState == 'Light' ? colors.brand : colors.tertiary, borderWidth: 2, justifyContent: 'center', alignItems: 'center'}}>
+                                {AppStylingContextState == 'Light' && (
                                     <View style={{backgroundColor: colors.tertiary, minHeight: 15, height: 15, maxHeight: 15, minWidth: 15, width: 15, maxWidth: 15, borderRadius: 15/2}}/>
                                 )}
                             </View>
@@ -140,7 +98,7 @@ const AppStyling = ({navigation}) => {
                 </View>
             </View>
             <View style={{justifyContent: 'center', alignContent: 'center', alignItems: 'center', alignSelf: 'center', flexDirection: 'row'}}>
-                <TouchableOpacity style={{flexDirection: 'column', alignItems: 'center', marginHorizontal: '5%', width: '40%', backgroundColor: colors.primary, borderColor: colors.borderColor, borderWidth: 2, borderRadius: 50}} onPress={() => {navigation.navigate('BuiltInStylingMenu')}}>
+                <TouchableOpacity style={{flexDirection: 'column', alignItems: 'center', marginHorizontal: '5%', width: '40%', backgroundColor: colors.primary, borderColor: colors.borderColor, borderWidth: 2, borderRadius: 50}} onPress={() => {navigation.navigate('OtherStyles')}}>
                     <Text style={{fontSize: 24, fontWeight: 'bold', color: colors.tertiary, textAlign: 'center'}}>Other Styles</Text>
                     <View style={{marginVertical: 10, backgroundColor: colors.borderColor, minHeight: 30, height: 30, maxHeight: 30, minWidth: 30, width: 30, maxWidth: 30, borderRadius: 30/2, borderColor: AppStylingContextState != 'Dark' && AppStylingContextState != 'Light' && AppStylingContextState != 'Default' && AppStylingContextState != 'PureDark' && AppStylingContextState != 'PureLight' ? colors.brand : colors.tertiary, borderWidth: 2}}>
                         {AppStylingContextState == 'PureLight' || AppStylingContextState == 'PureDark' ? (
@@ -148,7 +106,7 @@ const AppStyling = ({navigation}) => {
                         ) : null}
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flexDirection: 'column', alignItems: 'center', marginHorizontal: '5%', width: '40%', backgroundColor: colors.primary, borderColor: colors.borderColor, borderWidth: 2, borderRadius: 50, marginVertical: 20}} onPress={() => {navigation.navigate('SimpleStylingMenu', {ableToRefresh: false, indexNumToUse: null, backToProfileScreen: false})}}>
+                <TouchableOpacity style={{flexDirection: 'column', alignItems: 'center', marginHorizontal: '5%', width: '40%', backgroundColor: colors.primary, borderColor: colors.borderColor, borderWidth: 2, borderRadius: 50, marginVertical: 20}} onPress={() => {navigation.navigate('CustomStylesMenu', {ableToRefresh: false, indexNumToUse: null, backToProfileScreen: false})}}>
                     <Text style={{fontSize: 24, fontWeight: 'bold', color: colors.tertiary, textAlign: 'center'}}>Custom Styling</Text>
                     <View style={{marginVertical: 10, backgroundColor: colors.borderColor, minHeight: 30, height: 30, maxHeight: 30, minWidth: 30, width: 30, maxWidth: 30, borderRadius: 30/2, borderColor: AppStylingContextState != 'Dark' && AppStylingContextState != 'Light' && AppStylingContextState != 'Default' && AppStylingContextState != 'PureDark' && AppStylingContextState != 'PureLight' ? colors.brand : colors.tertiary, borderWidth: 2}}>
                         {AppStylingContextState != 'Dark' && AppStylingContextState != 'Light' && AppStylingContextState != 'Default' && AppStylingContextState != 'PureLight' && AppStylingContextState != 'PureDark' && (
