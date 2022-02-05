@@ -938,10 +938,10 @@ export const ReportProfileOptionsView = styled.View`
     zIndex: 9999999;
     align-self: center;
     align-items: center;
-    margin-vertical: 30%;
+    margin-vertical: 10%;
     left: -30000px;
     width: 90%;
-    height: 550px;
+    height: 400px;
     background-color: ${darkest};
     border-color: ${secondary};
     border-radius: 20px;
@@ -968,7 +968,7 @@ export const ReportProfileOptionsView = styled.View`
 `;
 
 export const ReportProfileOptionsViewButtons = styled.TouchableOpacity`
-    margin-top: 5%;
+    margin-top: 1%;
     align-items: center;
     justify-content: center;
     width: 80%;

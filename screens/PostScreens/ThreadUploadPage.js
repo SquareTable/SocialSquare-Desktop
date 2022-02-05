@@ -35,7 +35,7 @@ import {
 const {brand, primary, tertiary, darkLight, slightlyLighterGrey, midWhite, greyish} = Colors;
 
 //From react native
-import {View, Image, ActivityIndicator, ImageBackground, StyleSheet, ScrollView, TouchableOpacity, Text} from 'react-native';
+import {View, Image, ActivityIndicator, ImageBackground, StyleSheet, ScrollView, TouchableOpacity, Text, Platform} from 'react-native';
 
 //Axios
 import axios from 'axios';
@@ -185,12 +185,14 @@ const ThreadUploadPage = ({route, navigation}) => {
     const UserTextInput = ({label, icon, body, ...props}) => {
         if (body == true) {
             return(
-                <View>
-                    <LeftIcon style={{top: 28}} searchIcon={true}>
-                        <Octicons name={icon} size={30} color={brand} />
-                    </LeftIcon>
+                <View style={{width: '100%'}}>
+                    {/*
+                        <LeftIcon style={{top: 28}} searchIcon={true}>
+                            <Octicons name={icon} size={30} color={brand} />
+                        </LeftIcon>
+                    */}
                     <StyledInputLabel style={{color: colors.tertiary}}>{label}</StyledInputLabel>
-                    <StyledTextInput searchPage={true} style={{borderColor: dark ? midWhite : greyish, borderRadius: 10, backgroundColor: dark ? darkLight : colors.borderColor, borderWidth: 3, color: colors.tertiary}} {...props}/>
+                    <StyledTextInput searchPage={true} style={{borderColor: dark ? midWhite : greyish, borderRadius: 10, backgroundColor: dark ? darkLight : colors.borderColor, borderWidth: 3, color: colors.tertiary, width: '100%'}} {...props}/>
                 </View>
             )
         } else {
@@ -207,7 +209,7 @@ const ThreadUploadPage = ({route, navigation}) => {
     }
 
     return(
-        <StyledContainer style={{backgroundColor: colors.primary}}>
+        <>
             <TouchableOpacity onPress={() => {navigation.goBack()}} style={{zIndex: 2, position: 'absolute', top: 10, left: 10}}>
                 <Image
                     source={require('../assets/app_icons/back_arrow.png')}
@@ -216,8 +218,8 @@ const ThreadUploadPage = ({route, navigation}) => {
                     resizeMethod="resize"
                 />
             </TouchableOpacity>
-            <ScrollView>
-                <InnerContainer style={{backgroundColor: colors.primary}}>
+            <ScrollView style={{width: '100%'}}>
+                <InnerContainer style={{backgroundColor: colors.primary, width: '100%'}}>
                     <PageLogo style={{tintColor: colors.tertiary}} source={require('./../../assets/icomoon-icons/IcoMoon-Free-master/PNG/64px/007-pencil2.png')} />
                     
                     <PageTitle>Create Thread</PageTitle>
@@ -240,21 +242,24 @@ const ThreadUploadPage = ({route, navigation}) => {
                                     })
                                 }
                             } else if (values.threadFormat == "Images") {
-                                /*if (values.threadTitle == "" || selectedCategory == null || image == null) {
-                                    handleMessage('Please fill all the fields.');
+                                if (Platform.OS != 'macos') {
+                                    if (values.threadTitle == "" || selectedCategory == null || image == null) {
+                                        handleMessage('Please fill all the fields.');
+                                    } else {
+                                        let tempValues = values;
+                                        tempValues.selectedCategory = selectedCategory;
+                                        tempValues.screenshotsAllowed = screenshotsAllowed;
+                                        tempValues.image = image;
+                                        tempValues.threadNSFL = postIsNSFL;
+                                        tempValues.threadNSFW = postIsNSFW;
+                                        navigation.reset({
+                                            index: 0,
+                                            routes: [{name: 'PostScreen', params: {postData: tempValues, postType: 'thread_image', navigateToHomeScreen: true}}]
+                                        })
+                                    }
                                 } else {
-                                    let tempValues = values;
-                                    tempValues.selectedCategory = selectedCategory;
-                                    tempValues.screenshotsAllowed = screenshotsAllowed;
-                                    tempValues.image = image;
-                                    tempValues.threadNSFL = postIsNSFL;
-                                    tempValues.threadNSFW = postIsNSFW;
-                                    navigation.reset({
-                                        index: 0,
-                                        routes: [{name: 'PostScreen', params: {postData: tempValues, postType: 'thread_image', navigateToHomeScreen: true}}]
-                                    })
-                                }*/
-                                alert('Download the iOS or Android version of SocialSquare to be able to post threads with images in them.')
+                                    alert('Download the iOS, Android, or Windows version of SocialSquare or use the SocialSquare website to be able to post threads with images in them.')
+                                }
                             }
                         }}
                     >
@@ -348,57 +353,66 @@ const ThreadUploadPage = ({route, navigation}) => {
                                         onChangeText={handleChange('threadBody')}
                                         onBlur={handleBlur('threadBody')}
                                         value={values.threadBody}
+                                        style={{maxHeight: 100, borderRadius: 10}}
                                     />
                                 )}
-                                {selectFormat == "Images" && /*(
-                                    <View style={{width: '90%', alignSelf: 'center', marginVertical: 10}}>
-                                        {image && <MultiMediaPostFrame style={{width: '100%', aspectRatio: 1/1, backgroundColor: colors.borderColor}} PostingThreadImage={true}>
-                                            <Image source={image} style={{ width: "100%", height: '100%'}} resizeMode="contain" />
-                                        </MultiMediaPostFrame>}
-                                        {image && <StyledButton style={{backgroundColor: colors.primary, borderColor: colors.tertiary}} removeImage={true} onPress={() => {navigation.setParams({imageFromRoute: null})}}>
-                                            <ButtonText style={{color: colors.tertiary}} removeImage={true}>
-                                                X
-                                            </ButtonText>
-                                        </StyledButton>}
-                                        {!image && <MultiMediaPostFrame style={{width: '100%', aspectRatio: 1/1, backgroundColor: colors.borderColor}} PostingThreadImage={true}>
-                                            <View style={{flexDirection: 'row'}}>
-                                                <StyledButton style={{backgroundColor: colors.borderColor, borderColor: colors.tertiary}} postImage={true} onPress={OpenImgLibrary}>
-                                                    <ButtonText style={{color: colors.tertiary}} postImage={true}>
-                                                        +
+                                {selectFormat == "Images" && 
+                                    <>
+                                        {Platform.OS != 'macos' ? (
+                                            <View style={{width: '90%', alignSelf: 'center', marginVertical: 10}}>
+                                                {image && <MultiMediaPostFrame style={{width: '100%', aspectRatio: 1/1, backgroundColor: colors.borderColor}} PostingThreadImage={true}>
+                                                    <Image source={image} style={{ width: "100%", height: '100%'}} resizeMode="contain" />
+                                                </MultiMediaPostFrame>}
+                                                {image && <StyledButton style={{backgroundColor: colors.primary, borderColor: colors.tertiary}} removeImage={true} onPress={() => {navigation.setParams({imageFromRoute: null})}}>
+                                                    <ButtonText style={{color: colors.tertiary}} removeImage={true}>
+                                                        X
                                                     </ButtonText>
-                                                </StyledButton>
-                                                <View style={{width: 20}}/>
-                                                <StyledButton style={{backgroundColor: colors.borderColor, borderColor: colors.tertiary}} postImage={true} onPress={checkForCameraPermissions}>
-                                                <Image
-                                                    source={require('../../assets/icomoon-icons/IcoMoon-Free-master/PNG/64px/016-camera.png')}
-                                                    style={{height: 30, width: 30, tintColor: colors.tertiary}}
-                                                    resizeMode="contain"
-                                                    resizeMethod="resize"
+                                                </StyledButton>}
+                                                {!image && <MultiMediaPostFrame style={{width: '100%', aspectRatio: 1/1, backgroundColor: colors.borderColor}} PostingThreadImage={true}>
+                                                    <View style={{flexDirection: 'row'}}>
+                                                        <StyledButton style={{backgroundColor: colors.borderColor, borderColor: colors.tertiary}} postImage={true} onPress={OpenImgLibrary}>
+                                                            <ButtonText style={{color: colors.tertiary}} postImage={true}>
+                                                                +
+                                                            </ButtonText>
+                                                        </StyledButton>
+                                                        <View style={{width: 20}}/>
+                                                        <StyledButton style={{backgroundColor: colors.borderColor, borderColor: colors.tertiary}} postImage={true} onPress={checkForCameraPermissions}>
+                                                        <Image
+                                                            source={require('../../assets/icomoon-icons/IcoMoon-Free-master/PNG/64px/016-camera.png')}
+                                                            style={{height: 30, width: 30, tintColor: colors.tertiary}}
+                                                            resizeMode="contain"
+                                                            resizeMethod="resize"
+                                                        />
+                                                        </StyledButton>
+                                                    </View>
+                                                </MultiMediaPostFrame>}
+                                                <UserTextInput
+                                                    label="Image Description (optional)"
+                                                    icon="note"
+                                                    placeholder=""
+                                                    body={true}
+                                                    multiline={true}
+                                                    placeholderTextColor={tertiary}
+                                                    onChangeText={handleChange('threadImageDescription')}
+                                                    onBlur={handleBlur('threadImageDescription')}
+                                                    value={values.threadImageDescription}
                                                 />
-                                                </StyledButton>
                                             </View>
-                                        </MultiMediaPostFrame>}
-                                        <UserTextInput
-                                            label="Image Description (optional)"
-                                            icon="note"
-                                            placeholder=""
-                                            body={true}
-                                            multiline={true}
-                                            placeholderTextColor={tertiary}
-                                            onChangeText={handleChange('threadImageDescription')}
-                                            onBlur={handleBlur('threadImageDescription')}
-                                            value={values.threadImageDescription}
-                                        />
-                                    </View>
-                                )*/ (
-                                    <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.tertiary, textAlign: 'center', marginVertical: 10}}>Download the iOS or Android version of SocialSquare to use this feature.</Text>
+                                    
+                                        ) : (
+                                            <Text style={{fontSize: 20, color: colors.tertiary, textAlign: 'center', marginVertical: 10}}>Download the iOS, Android, or Windows version of SocialSquare or use the SocialSquare website to use this feature.</Text>
+                                        )}
+                                    </>
+                                }
+                                {selectFormat == "User Posts" && (
+                                    <Text style={{fontSize: 20, color: colors.tertiary, textAlign: 'center', marginVertical: 10}}>User posts in threads are coming soon</Text>
                                 )}
                                 <AboveButtonText style={{color: colors.tertiary}}>Select Category</AboveButtonText>
                                 <StyledButton style={{backgroundColor: colors.primary}} signUpButton={true} onPress={() => navigation.navigate("SelectCategorySearchScreen", {threadFormat: selectFormat, threadTitle: values.threadTitle, threadSubtitle: values.threadSubtitle, threadTags: values.threadTags, threadCategory: selectedCategory, threadBody: values.threadBody, threadImage: image, threadImageDescription: values.threadImageDescription, threadNSFW: values.threadNSFW, threadNSFL: values.threadNSFL})}>
                                     <ButtonText style={{top: -9}} signUpButton={true}>{selectedCategory || "None"}</ButtonText>
                                 </StyledButton>
                                 <PostHorizontalView centerAlign={true}>
-                                    <CheckBoxForPosts selectedState={postIsNSFW} onPress={checkboxNSFWPressed}/>
+                                    <CheckBoxForPosts style={{marginLeft: 4}} selectedState={postIsNSFW} onPress={checkboxNSFWPressed}/>
                                     <AboveButtonText style={{color: colors.tertiary, borderColor: dark ? 3 : 5}} byCheckBox={true}>Mark as NSFW</AboveButtonText>
                                 </PostHorizontalView>
                                 <PostHorizontalView centerAlign={true}>
@@ -427,7 +441,7 @@ const ThreadUploadPage = ({route, navigation}) => {
                     </Formik>
                 </InnerContainer>
             </ScrollView>
-        </StyledContainer>
+        </>
     );
 }
 

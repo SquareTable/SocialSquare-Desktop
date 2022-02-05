@@ -23,17 +23,7 @@ const RecordAudioPage = ({navigation}) => {
                 <TestText style={{textAlign: 'center', color: colors.tertiary}}>Category Creation</TestText>
             </ChatScreen_Title>
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{color: colors.tertiary, fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>Download the iOS or Android version of SocialSquare to use this feature.</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
-                    <Image
-                        source={require('../assets/app_icons/App-Store-Symbol.png')}
-                        style={{width: 200, aspectRatio: 16/9}}
-                    />
-                    <Image
-                        source={require('../assets/app_icons/google-play-badge.png')}
-                        style={{width: 200, aspectRatio: 323/125}}
-                    />
-                </View>
+                <Text style={{color: colors.tertiary, fontSize: 20, fontWeight: 'bold', textAlign: 'center'}}>Download the iOS, Android, or Windows version of SocialSquare or use the SocialSquare website to use this feature.</Text>
             </View>
         </>
     )

@@ -38,6 +38,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //credentials context
 import { StoredCredentialsContext } from '../components/StoredCredentialsContext';
 
+import { Platform } from 'react-native';
+
 
 const PostScreen = ({navigation, route}) => {
      //context
@@ -82,7 +84,7 @@ const PostScreen = ({navigation, route}) => {
             setFormatThreeSelected(false)
             setFormatFourSelected(false)
             setFormatFiveSelected(false)
-            setFormatMessage('Post Multimedia (iOS or Android only)')
+            setFormatMessage(Platform.OS == 'macos' ? 'Post Multimedia (iOS, Android, Windows, and Web only)' : 'Post Multimedia')
         }
     }
 
@@ -115,7 +117,7 @@ const PostScreen = ({navigation, route}) => {
             setFormatThreeSelected(false)
             setFormatFourSelected(true)
             setFormatFiveSelected(false)
-            setFormatMessage('Post Audio (iOS or Android only)')
+            setFormatMessage(Platform.OS == 'macos' ? 'Post Audio (iOS, Android, Windows, and Web only)' : 'Post Audio')
         }
     }
 
@@ -126,7 +128,7 @@ const PostScreen = ({navigation, route}) => {
             setFormatThreeSelected(false)
             setFormatFourSelected(false)
             setFormatFiveSelected(true)
-            setFormatMessage('Create a category (iOS or Android only)')
+            setFormatMessage(Platform.OS == 'macos' ? 'Create a category (iOS, Android, Windows, and Web only)' : 'Create a category')
         }
     }
 

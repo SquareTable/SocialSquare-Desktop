@@ -2381,7 +2381,7 @@ const Welcome = ({navigation, route}) => {
                             </TouchableOpacity>
                         </ViewHider>
                         <ViewHider viewHidden={!backButtonHidden}>
-                            <View style={{minWidth: 40, marginRight: '65%'}}/>
+                            <View style={{minWidth: 40, marginRight: deviceDimensions.width - 100}}/>
                         </ViewHider>
                         <TouchableOpacity disabled={PageElementsState} onPress={goToSettingsScreen}>
                             <Image

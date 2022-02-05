@@ -750,7 +750,7 @@ const HomeScreen = ({navigation, route}) => {
                     </StyledButton>
                 </ScrollView>
             </ProfileOptionsView>
-            <ProfileOptionsView style={{backgroundColor: colors.primary, top: -200}} viewHidden={filterMenuShown}>
+            <ProfileOptionsView style={{backgroundColor: colors.primary}} viewHidden={filterMenuShown}>
                 <View style={{flexDirection: 'row', width: '100%', justifyContent: 'center'}}>
                     <TouchableOpacity style={{position: 'absolute', left: 10}} onPress={changeFilterView}>
                         <Image
@@ -766,12 +766,12 @@ const HomeScreen = ({navigation, route}) => {
                 <ScrollView style={{width: '100%'}}>
                     <View style={{flex: 2, flexDirection: 'row'}}>
                         <View style={{flexDirection: 'column', flex: 1, alignItems: 'center'}}>
-                            <Text style={{color: colors.tertiary, fontSize: 18, fontWeight: 'bold', marginVertical: 10}}>Photos</Text>
-                            <Text style={{color: colors.tertiary, fontSize: 18, fontWeight: 'bold', marginVertical: 10}}>Videos</Text>
-                            <Text style={{color: colors.tertiary, fontSize: 18, fontWeight: 'bold', marginVertical: 10}}>Audio</Text>
-                            <Text style={{color: colors.tertiary, fontSize: 18, fontWeight: 'bold', marginVertical: 10}}>Threads</Text>
-                            <Text style={{color: colors.tertiary, fontSize: 18, fontWeight: 'bold', marginVertical: 10}}>Polls</Text>
-                            <Text style={{color: colors.tertiary, fontSize: 18, fontWeight: 'bold', marginVertical: 10}}>Categories</Text>
+                            <Text style={{color: colors.tertiary, fontSize: 18, fontWeight: 'bold', marginVertical: 5}}>Photos</Text>
+                            <Text style={{color: colors.tertiary, fontSize: 18, fontWeight: 'bold', marginVertical: 5}}>Videos</Text>
+                            <Text style={{color: colors.tertiary, fontSize: 18, fontWeight: 'bold', marginVertical: 5}}>Audio</Text>
+                            <Text style={{color: colors.tertiary, fontSize: 18, fontWeight: 'bold', marginVertical: 5}}>Threads</Text>
+                            <Text style={{color: colors.tertiary, fontSize: 18, fontWeight: 'bold', marginVertical: 5}}>Polls</Text>
+                            <Text style={{color: colors.tertiary, fontSize: 18, fontWeight: 'bold', marginVertical: 5}}>Categories</Text>
                         </View>
                         <View style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>
                             <Switch

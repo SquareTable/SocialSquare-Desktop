@@ -2474,7 +2474,7 @@ const ProfilePages = ({ route, navigation }) => {
     return (
         <>
             <Animated.View style={{opacity: ProfileOptionsViewOpacity, zIndex: ProfileOptionsViewOpacity.interpolate({inputRange: [0, 1], outputRange: [-10, 3]})}}>
-                <ProfileOptionsView style={{backgroundColor: colors.primary, top: -180}} viewHidden={false}>
+                <ProfileOptionsView style={{backgroundColor: colors.primary}} viewHidden={false}>
                     <ProfileOptionsViewText style={{color: colors.tertiary}}>{profilesDisplayName || "Couldn't get profile display name"}</ProfileOptionsViewText>
                     <ProfileOptionsViewSubtitleText style={{color: colors.tertiary}}>Options</ProfileOptionsViewSubtitleText>
                     <ProfileOptionsViewButtons greyButton={true} onPress={changeProfilesOptionsView}>
@@ -2633,7 +2633,7 @@ const ProfilePages = ({ route, navigation }) => {
                 <WelcomeContainer style={{backgroundColor: colors.primary}}>
                     <ProfileHorizontalView style={{marginBottom: -20, marginTop: 10}} topItems={true}>
                         <ViewHider viewHidden={backButtonHidden}>
-                            <TouchableOpacity style={{marginRight: '75.5%'}} onPress={() => {navigation.goBack()}}>
+                            <TouchableOpacity style={{marginRight: deviceDimensions.width - 100}} onPress={() => {navigation.goBack()}}>
                                 <Image
                                     source={require('../assets/app_icons/back_arrow.png')}
                                     style={{ width: 40, height: 40, tintColor: colors.tertiary}}
