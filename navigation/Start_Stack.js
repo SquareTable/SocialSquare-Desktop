@@ -18,6 +18,10 @@ export const Start_Stack = ({hasOpenedSocialSquare}) => {
                 storedCredentials ?
                     <>
                         <Stack.Screen name="Tabs" component={Tabs} options={{headerShown: false}}/>
+                        <Stack.Group screenOptions={{presentation: 'modal'}}>
+                            <Stack.Screen name="ModalLoginScreen" component={LoginScreen} options={{headerShown: false}}/>
+                            <Stack.Screen name="ModalSignup" component={Signup} options={{headerShown: false}}/>
+                        </Stack.Group>
                     </>
                 : 
                     <>

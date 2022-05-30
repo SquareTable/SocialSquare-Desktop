@@ -27,6 +27,13 @@ import OtherStyles from '../screens/OtherStyles';
 import CustomStylesMenu from '../screens/StylingScreens/CustomStylesMenu';
 import EditCustomStyle from '../screens/StylingScreens/EditCustomStyle';
 import ColorPickerScreen from '../screens/StylingScreens/ColorPicker';
+import SecuritySettingsScreen from '../screens/SecuritySettingsScreen';
+import GDPRCompliance from '../screens/SecuritySettingsScreens/GDPRCompliance';
+import WhatIsStoredOnOurServers from '../screens/SecuritySettingsScreens/WhatIsStoredOnOurServers';
+import LoginActivity from '../screens/SecuritySettingsScreens/LoginActivity';
+import TwoFA from '../screens/SecuritySettingsScreens/2FA';
+import LoginAttempts from '../screens/SecuritySettingsScreens/LoginAttempts';
+import NotificationsSettingsScreen from '../screens/NotificationsSettingsScreen';
 
 const Stack = createStackNavigator();
 
@@ -92,6 +99,13 @@ export const ProfileScreenStack = () => {
             <Stack.Screen name="CustomStylesMenu" component={CustomStylesMenu} options={{headerShown: false}}/>
             <Stack.Screen name="EditCustomStyle" component={EditCustomStyle} options={{headerShown: false}}/>
             <Stack.Screen name="ColorPickerScreen" component={ColorPickerScreen} options={{headerShown: false}}/>
+            <Stack.Screen name="SecuritySettingsScreen" component={SecuritySettingsScreen} options={{headerShown: false}}/>
+            <Stack.Screen name="GDPRCompliance" component={GDPRCompliance} options={{headerShown: false}}/>
+            <Stack.Screen name="WhatIsStoredOnOurServers" component={WhatIsStoredOnOurServers} options={{headerShown: false}}/>
+            <Stack.Screen name="LoginActivity" component={LoginActivity} options={{headerShown: false}}/>
+            <Stack.Screen name="2FA" component={TwoFA} options={{headerShown: false}}/>
+            <Stack.Screen name="LoginAttempts" component={LoginAttempts} options={{headerShown: false}}/>
+            <Stack.Screen name="NotificationsSettingsScreen" component={NotificationsSettingsScreen} options={{headerShown: false}}/>
         </Stack.Navigator>
     );
 }

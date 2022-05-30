@@ -1,6 +1,6 @@
 //import 'react-native-gesture-handler';
 import React, {useState, useEffect, useRef} from "react";
-import {View, Text, useColorScheme} from "react-native";
+import {View, Text, useColorScheme, Animated, useWindowDimensions, TouchableOpacity, FlatList} from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { StoredCredentialsContext } from "./components/StoredCredentialsContext.js";
 import { Start_Stack } from './navigation/Start_Stack';
@@ -13,7 +13,13 @@ import NetInfo from "@react-native-community/netinfo";
 import { AppStylingContext } from "./components/AppStylingContext.js";
 import { HasOpenedSocialSquareContext } from "./components/HasOpenedSocialSquareContext.js";
 import { RefreshAppStylingContext } from "./components/RefreshAppStylingContext.js";
-
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import { useTheme } from '@react-navigation/native';
+import { navigationRef } from './components/ReactNavigationRef.js';
+import * as AppNavigation from './components/ReactNavigationRef.js';
+import {
+  Avatar
+} from './components/styling.js';
 const App = () => {
   const [storedCredentials, setStoredCredentials] = useState(null);
   const [profilePictureUri, setProfilePictureUri] = useState(SocialSquareLogo_B64_png);
@@ -28,6 +34,14 @@ const App = () => {
   const previousStylingState = useRef(null)
   const AsyncSimpleStyling_ParsedRef = useRef(null)
   const [AsyncStorageSimpleStylingData, setAsyncStorageSimpleStylingData] = useState()
+  const AccountSwitcherY = useRef(new Animated.Value(500)).current;
+  const AccountSwitchedBoxY = useRef(new Animated.Value(0)).current;
+  const [AccountSwitcherHeight, setAccountSwitcherHeight] = useState(0);
+  const DismissAccountSwitcherBoxActivated = useRef(new Animated.Value(0)).current;
+  const windowDimensions = useWindowDimensions();
+
+  const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
+
   const AppDarkTheme = {
     dark: true,
     colors: {
@@ -201,6 +215,198 @@ const App = () => {
     setCurrentSimpleStylingDataToStyle(AppStylingContextState)
   }
 
+  useEffect(() => {
+    if (showAccountSwitcher == true) {
+      Animated.timing(DismissAccountSwitcherBoxActivated, { toValue: 1, duration: 1, useNativeDriver: true }).start();
+      Animated.timing(AccountSwitcherY, {
+        toValue: -AccountSwitcherHeight + 60,
+        duration: 100,
+        useNativeDriver: true,
+        }).start();
+        setShowAccountSwitcher(false)
+    }
+  }, [showAccountSwitcher])
+
+  /*
+  const AccountSwitcher = () => {
+    const onPanGestureEvent = Animated.event(
+      [
+        {
+          nativeEvent: {
+            translationY: AccountSwitcherY,
+          },
+        },
+      ],
+      { useNativeDriver: true }
+    );
+    const onHandlerStateChange = event => {
+      if (event.nativeEvent.oldState === State.ACTIVE) {
+        if (event.nativeEvent.absoluteY > windowDimensions.height - 80 - AccountSwitcherHeight) {
+          Animated.timing(DismissAccountSwitcherBoxActivated, { toValue: 0, duration: 1, useNativeDriver: true }).start();
+          Animated.timing(AccountSwitcherY, {
+            toValue: 250,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        } else {
+          Animated.timing(AccountSwitcherY, {
+            toValue: 60 - AccountSwitcherHeight,
+            duration: 100,
+            useNativeDriver: true
+          }).start();
+        }
+      }
+    }
+    const onBoxPress = () => {
+      Animated.timing(AccountSwitcherY, {
+        toValue: 250,
+        duration: 200,
+        useNativeDriver: true
+      }).start();
+    }
+    const AddNewAccount = () => {
+      AppNavigation.navigate('ModalLoginScreen', {modal: true});
+      Animated.timing(DismissAccountSwitcherBoxActivated, { toValue: 0, duration: 1, useNativeDriver: true }).start();
+      Animated.timing(AccountSwitcherY, {
+        toValue: 250,
+        duration: 200,
+        useNativeDriver: true
+      }).start();
+    }
+    const goToAccount = (account) => {
+      setProfilePictureUri(account.profilePictureUri);
+      setStoredCredentials(account);
+      Animated.timing(DismissAccountSwitcherBoxActivated, { toValue: 0, duration: 1, useNativeDriver: true }).start();
+      Animated.timing(AccountSwitcherY, {
+        toValue: 250,
+        duration: 200,
+        useNativeDriver: true
+      }).start();
+      AppNavigation.reset('Tabs', 0);
+    }
+    return(
+      //<PanGestureHandler onGestureEvent={onPanGestureEvent} onHandlerStateChange={onHandlerStateChange}>
+        <AnimatedTouchableOpacity style={{backgroundColor: 'rgba(0, 0, 0, 0.7)', height: 'auto', width: '90%', position: 'absolute', zIndex: 1000, top: windowDimensions.height - 140, marginHorizontal: '5%', flexDirection: 'column', borderColor: 'black', borderRadius: 15, borderWidth: 1, transform: [{translateY: AccountSwitcherY}], alignSelf: 'center', maxHeight: windowDimensions.height / 2}} onLayout={e => setAccountSwitcherHeight(e.nativeEvent.layout.height)} onPress={onBoxPress}>
+            {storedCredentials ?
+              <>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-start', height: 60, alignItems: 'flex-start'}}>
+                  <Avatar style={{width: 40, height: 40, marginLeft: 15}} resizeMode="cover" source={{uri: profilePictureUri}}/>
+                  <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold', marginTop: 16, position: 'absolute', left: 71}}>{storedCredentials.name}</Text>
+                </View>
+                <View style={{width: '100%', backgroundColor: 'white', height: 3, borderColor: 'white', borderWidth: 1, borderRadius: 20, width: '96%', alignSelf: 'center'}}/>
+                <FlatList
+                  data={allCredentialsStoredList}
+                  inverted={true}
+                  renderItem={({item}) => (
+                    <>
+                      {item.secondId != storedCredentials.secondId ?
+                        <TouchableOpacity onPress={() => {goToAccount(item)}} style={{flexDirection: 'row', justifyContent: 'flex-start', height: 60, alignItems: 'flex-start'}}>
+                          <Avatar style={{width: 40, height: 40, marginLeft: 15}} resizeMode="cover" source={{uri: item.profilePictureUri}}/>
+                          <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold', marginTop: 16, position: 'absolute', left: 71}}>{item.name}</Text>
+                        </TouchableOpacity>
+                      : null}
+                    </>
+                  )}
+                  keyExtractor={(item, index) => 'key'+index}
+                />
+                <TouchableOpacity onPress={AddNewAccount} style={{flexDirection: 'row', justifyContent: 'flex-start', height: 60}}>
+                  <EvilIcons name="plus" size={60} color="white" style={{marginLeft: 6, marginTop: 4}}/>
+                  <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold', marginLeft: 5, marginTop: 16}}>Add New Account</Text>
+                </TouchableOpacity>
+              </>
+            : null}
+        </AnimatedTouchableOpacity>
+      //</PanGestureHandler>
+    )
+  }
+
+  const AccountSwitchedBox = () => {
+    const {colors} = useTheme()
+    const onPanGestureEvent = Animated.event(
+      [
+        {
+          nativeEvent: {
+            translationY: AccountSwitchedBoxY,
+          },
+        },
+      ],
+      { useNativeDriver: true }
+    );
+    const onHandlerStateChange = event => {
+      if (event.nativeEvent.oldState === State.ACTIVE) {
+        if (event.nativeEvent.absoluteY > windowDimensions.height - 140) {
+          Animated.timing(AccountSwitchedBoxY, {
+            toValue: 250,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        } else {
+          Animated.timing(AccountSwitchedBoxY, {
+            toValue: 0,
+            duration: 100,
+            useNativeDriver: true
+          }).start();
+        }
+      }
+    }
+    const onBoxPress = () => {
+      Animated.timing(AccountSwitchedBoxY, {
+        toValue: 250,
+        duration: 200,
+        useNativeDriver: true
+      }).start();
+    }
+    return(
+      <>
+        {storedCredentials ?
+          //<PanGestureHandler onGestureEvent={onPanGestureEvent} onHandlerStateChange={onHandlerStateChange}>
+            <Animated.View style={{backgroundColor: (colors.primary + 'CC'), height: 60, width: '90%', position: 'absolute', zIndex: 999, top: windowDimensions.height - 140, marginHorizontal: '5%', flexDirection: 'row', borderColor: 'black', borderRadius: 15, borderWidth: 1, transform: [{translateY: AccountSwitchedBoxY}], justifyContent: 'center', alignItems: 'center'}}>
+              <TouchableOpacity onPress={onBoxPress} style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+                <Avatar style={{width: 40, height: 40, marginLeft: 15}} source={{uri: profilePictureUri}}/>
+                <Text style={{color: colors.tertiary, fontSize: 16, marginTop: 20, marginLeft: 15, fontWeight: 'bold'}}>{'Switched to ' + storedCredentials.name}</Text>
+              </TouchableOpacity>
+            </Animated.View>
+          //</PanGestureHandler>
+        : null}
+      </>
+    )
+  }
+
+  */
+
+  useEffect(() => {
+    try {
+      if (allCredentialsStoredList) {
+        if (allCredentialsStoredList.length == 0 || allCredentialsStoredList.length == 1) {
+          Animated.timing(AccountSwitchedBoxY, {
+            toValue: 250,
+            duration: 1,
+            useNativeDriver: true
+          }).start();
+        }
+      }
+      if (storedCredentials && allCredentialsStoredList) {
+        if (allCredentialsStoredList.length > 1) {
+          Animated.sequence([
+            Animated.timing(AccountSwitchedBoxY, {
+              toValue: 0,
+              duration: 100,
+              useNativeDriver: true
+            }),
+            Animated.delay(3000),
+            Animated.timing(AccountSwitchedBoxY, {
+              toValue: 250,
+              duration: 100,
+              useNativeDriver: true
+            })
+          ]).start();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [storedCredentials])
+
   async function setUpApp() {
     await AsyncStorage.getItem('socialSquareCredentials').then((result) => {
       if (!result) {
@@ -348,7 +554,9 @@ const App = () => {
                 <HasOpenedSocialSquareContext.Provider value={{hasOpenedSocialSquare, setHasOpenedSocialSquare}}>
                   <RefreshAppStylingContext.Provider value={{refreshAppStyling, setRefreshAppStyling}}>
                     {AppStylingContextState != 'Default' && AppStylingContextState != 'Light' && AppStylingContextState != 'Dark' && AppStylingContextState != 'PureDark' && AppStylingContextState != 'PureLight' ? previousStylingState.current != AppStylingContextState ? setCurrentSimpleStylingDataToStyle(AppStylingContextState) : null : null}
-                    <NavigationContainer theme={AppStylingContextState == 'Default' ? AppColorScheme == 'dark' ? AppDarkTheme : AppLightTheme : AppStylingContextState == 'Dark' ? AppDarkTheme : AppStylingContextState == 'Light' ? AppLightTheme : AppStylingContextState == 'PureDark' ? AppPureDarkTheme : AppStylingContextState == 'PureLight' ? AppPureLightTheme : currentSimpleStylingData}>
+                    <NavigationContainer ref={navigationRef} theme={AppStylingContextState == 'Default' ? AppColorScheme == 'dark' ? AppDarkTheme : AppLightTheme : AppStylingContextState == 'Dark' ? AppDarkTheme : AppStylingContextState == 'Light' ? AppLightTheme : AppStylingContextState == 'PureDark' ? AppPureDarkTheme : AppStylingContextState == 'PureLight' ? AppPureLightTheme : currentSimpleStylingData}>
+                      {/*<AccountSwitcher/>
+                      <AccountSwitchedBox/>*/}
                       <Start_Stack hasOpenedSocialSquare={hasOpenedSocialSquare}/>
                     </NavigationContainer>
                   </RefreshAppStylingContext.Provider>

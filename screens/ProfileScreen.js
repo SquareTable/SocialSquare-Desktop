@@ -82,7 +82,7 @@ import axios from 'axios';
 
 //credentials context
 import { StoredCredentialsContext } from '../components/StoredCredentialsContext';
-import { ImageBackground, ScrollView, SectionList, Image, View, ActivityIndicator, Touchable, RefreshControl, SafeAreaView, Text, Animated, useWindowDimensions, Platform, TouchableOpacity } from 'react-native';
+import { ImageBackground, ScrollView, SectionList, Image, View, ActivityIndicator, Touchable, RefreshControl, SafeAreaView, Text, Animated, useWindowDimensions, Platform, TouchableOpacity, Dimensions } from 'react-native';
 
 import {useTheme, useIsFocused} from "@react-navigation/native"
 import SocialSquareLogo_B64_png from '../assets/SocialSquareLogo_Base64_png.js';
@@ -2381,7 +2381,7 @@ const Welcome = ({navigation, route}) => {
                             </TouchableOpacity>
                         </ViewHider>
                         <ViewHider viewHidden={!backButtonHidden}>
-                            <View style={{minWidth: 40, marginRight: deviceDimensions.width - 100}}/>
+                            <View style={{minWidth: 40, marginRight: deviceDimensions.width ? deviceDimensions.width - 100 : Dimensions.get('window').width - 100}}/>
                         </ViewHider>
                         <TouchableOpacity disabled={PageElementsState} onPress={goToSettingsScreen}>
                             <Image

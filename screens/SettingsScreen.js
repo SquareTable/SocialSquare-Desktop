@@ -29,7 +29,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //credentials context
 import { StoredCredentialsContext } from '../components/StoredCredentialsContext';
-import { ImageBackground, ScrollView, Text, TouchableOpacity, View, Image, Linking } from 'react-native';
+import { ImageBackground, ScrollView, Text, TouchableOpacity, View, Image, Linking, Platform } from 'react-native';
 import SocialSquareLogo_B64_png from '../assets/SocialSquareLogo_Base64_png.js';
 import { ProfilePictureURIContext } from '../components/ProfilePictureURIContext.js';
 import { AllCredentialsStoredContext } from '../components/AllCredentialsStoredContext.js';
@@ -137,7 +137,7 @@ const SettingsPage = ({navigation}) => {
                         </SettingsPageItemTouchableOpacity>
                         <SettingsPageItemTouchableOpacity disabled={!logoutViewState} style={{borderColor: colors.borderColor}} onPress={() => {navigation.navigate('NotificationsSettingsScreen')}}>
                             <Icon name="alarm-light-outline" size={60} color={colors.tertiary}/>
-                            <SettingsItemText style={{color: colors.tertiary}}>Notifications</SettingsItemText>
+                            <SettingsItemText style={{color: colors.tertiary}}>{Platform.OS == 'macos' || Platform.OS == 'windows' ? 'Notifications (iOS, Android, and SocialSquare website only)' : 'Notifications'}</SettingsItemText>
                         </SettingsPageItemTouchableOpacity>
                         <SettingsPageItemTouchableOpacity disabled={!logoutViewState} style={{borderColor: colors.borderColor}} onPress={() => navigation.navigate("AccountSettings")}>
                             <SettingsItemImage style={{tintColor: colors.tertiary}} source={require('./../assets/app_icons/settings.png')}/>
